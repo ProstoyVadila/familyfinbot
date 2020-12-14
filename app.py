@@ -3,6 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher, executor
 
 import config
+from admin.notify import notify_admin_on_startup
 
 
 logging.basicConfig(level=logging.INFO)
@@ -12,7 +13,7 @@ dp = Dispatcher(bot)
 
 
 async def on_startup(dp: Dispatcher):
-    pass
+    await notify_admin_on_startup(dp)
 
 
 if __name__ == '__main__':
