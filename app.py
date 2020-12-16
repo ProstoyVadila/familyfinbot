@@ -1,6 +1,7 @@
 import logging
 
-from aiogram import Bot, Dispatcher, executor
+from aiogram import Bot, Dispatcher, executor, types
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 import config
 from admin.notify import notify_admin_on_startup
@@ -8,8 +9,9 @@ from admin.notify import notify_admin_on_startup
 
 logging.basicConfig(level=logging.INFO)
 
-bot = Bot(token=config.API_TOKEN)
-dp = Dispatcher(bot)
+bot = Bot(token=config.API_TOKEN, parse_mode=types.ParseMode.HTML)
+storage = MemoryStorage()
+dp = Dispatcher(bot, storage=storage)
 
 
 async def on_startup(dp: Dispatcher):
