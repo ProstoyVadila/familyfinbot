@@ -18,3 +18,43 @@ start_markup = InlineKeyboardMarkup(
     ]
 )
 
+menu_markup = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text='Установить бюджет',
+                callback_data='budget_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Внести расход',
+                callback_data='expanse_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Внести доход',
+                callback_data='income_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Получить статистику',
+                callback_data='statistics_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Выгрузить свои данные',
+                callback_data='download_data_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Вернуться назад',
+                callback_data='return_to_start_button'
+            )
+        ]
+    ]
+)
