@@ -4,20 +4,20 @@ budget_markup = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='На день',
-                callback_data='budget_day_button'
+                text='на день',
+                callback_data='day_budget_button'
             )
         ],
         [
             InlineKeyboardButton(
-                text='На неделю',
-                callback_data='budget_week_button'
+                text='на неделю',
+                callback_data='week_budget_button'
             )
         ],
         [
             InlineKeyboardButton(
-                text='На месяц',
-                callback_data='budget_month_button'
+                text='на месяц',
+                callback_data='month_budget_button'
             )
         ]
     ]

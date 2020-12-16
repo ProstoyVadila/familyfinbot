@@ -50,10 +50,15 @@ menu_markup = InlineKeyboardMarkup(
                 callback_data='download_data_button'
             )
         ],
+    ]
+)
+
+back_to_menu_markup = InlineKeyboardMarkup(
+    inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='Вернуться назад',
-                callback_data='return_to_start_button'
+                text='Вернуться в меню',
+                callback_data='menu_button'
             )
         ]
     ]
