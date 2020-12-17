@@ -48,3 +48,22 @@ expanse_category_keyboard = ReplyKeyboardMarkup(
     ],
     resize_keyboard=True
 )
+
+income_category_keyboard = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='Зарплата'),
+            KeyboardButton(text='Фриланс'),
+            KeyboardButton(text='Долг'),
+        ],
+        [
+            KeyboardButton(text='Пособие'),
+            KeyboardButton(text='Кешбек'),
+            KeyboardButton(text='Кредит'),
+        ],
+        [
+            KeyboardButton(text='Без категории')
+        ],
+    ],
+    resize_keyboard=True
+)

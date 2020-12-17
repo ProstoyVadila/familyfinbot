@@ -9,3 +9,9 @@ class BudgetState(StatesGroup):
 class ExpanseState(StatesGroup):
     value = State()
     category = State()
+
+
+class IncomeState(StatesGroup):
+    value = State()
+    category = State()
+
