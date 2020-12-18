@@ -8,6 +8,7 @@ from messages import base, error
 from keyboards.finance_keyboard import budget_keyboard
 from keyboards.inline.start_markups import back_to_menu_markup
 from states.finance_states import BudgetState
+from utils.extractor import parse_value
 
 
 PERIODS = {
@@ -44,9 +45,10 @@ async def get_budget_period(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=BudgetState.value)
 async def get_budget_value(message: types.Message, state: FSMContext):
-    if message.text.isdigit():
+    value = parse_value(message.text)
+    if value:
         async with state.proxy() as data:
-            data['value'] = int(message.text)
+            data['value'] = value
         await message.answer(
             base.YOUR_BUDGET_MESSAGE.format(
                 value=data['value'],

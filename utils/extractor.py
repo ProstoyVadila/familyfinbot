@@ -1,15 +1,16 @@
 import re
-
-from messages.error import PARSE_VALUE_ERROR_MESSAGE
-
-from .exceptions import NotCorrectValue
+from typing import Optional
 
 
-def parse_value(message_raw: str) -> float:
+def parse_value(message_raw: str) -> Optional[float]:
     if message_raw.isdigit():
         return float(message_raw)
-    message = message_raw.replace(' ', '')
-    regexp = re.search(r'\d+', message)
-    if not regexp:
-        raise NotCorrectValue(PARSE_VALUE_ERROR_MESSAGE)
-    return float(regexp.group(0))
+    # message = message_raw.replace(' ', '')
+    message = re.sub(r'\s+', ' ', message_raw)
+    regexp = re.search(r'([.]?\d[\d\s.,]*)', message, re.VERBOSE)
+    if regexp:
+        print(regexp)
+        value = regexp.group(0).replace(',', '.')
+        print(value)
+        return float(value)
+    return None

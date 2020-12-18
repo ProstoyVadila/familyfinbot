@@ -7,6 +7,7 @@ from app import dp, bot
 from messages import base, error
 from keyboards.finance_keyboard import expanse_category_keyboard, menu_keyboard
 from states.finance_states import ExpanseState
+from utils.extractor import parse_value
 
 
 @dp.message_handler(commands=['expanse'])
@@ -23,9 +24,10 @@ async def get_income(answer_object: Union[types.Message, types.CallbackQuery]):
 
 @dp.message_handler(state=ExpanseState.value)
 async def get_expanse_value(message: types.Message, state: FSMContext):
-    if message.text.isdigit():
+    value = parse_value(message.text)
+    if value:
         async with state.proxy() as data:
-            data['value'] = message.text
+            data['value'] = value
         await message.answer(
             base.EXPANSE_MESSAGE_END,
             reply_markup=expanse_category_keyboard
