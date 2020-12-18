@@ -10,8 +10,8 @@ from states.finance_states import ExpanseState
 from utils.extractors import parse_value
 
 
-@dp.message_handler(commands=['expanse'])
-@dp.callback_query_handler(lambda callback: callback.data == 'expanse_button')
+@dp.message_handler(commands=['expense'])
+@dp.callback_query_handler(lambda callback: callback.data == 'expense_button')
 async def get_income(answer_object: Union[types.Message, types.CallbackQuery]):
     if isinstance(answer_object, types.CallbackQuery):
         await answer_object.answer(cache_time=60)

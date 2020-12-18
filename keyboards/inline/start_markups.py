@@ -29,7 +29,7 @@ menu_markup = InlineKeyboardMarkup(
         [
             InlineKeyboardButton(
                 text='Внести расход',
-                callback_data='expanse_button'
+                callback_data='expense_button'
             )
         ],
         [
