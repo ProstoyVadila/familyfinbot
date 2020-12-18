@@ -1,3 +1,5 @@
+from typing import Union
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
@@ -7,11 +9,13 @@ from keyboards.finance_keyboard import expanse_category_keyboard, menu_keyboard
 from states.finance_states import ExpanseState
 
 
+@dp.message_handler(commands=['expanse'])
 @dp.callback_query_handler(lambda callback: callback.data == 'expanse_button')
-async def get_income(callback: types.CallbackQuery):
-    await callback.answer(cache_time=60)
+async def get_income(answer_object: Union[types.Message, types.CallbackQuery]):
+    if isinstance(answer_object, types.CallbackQuery):
+        await answer_object.answer(cache_time=60)
     await bot.send_message(
-        callback.from_user.id,
+        answer_object.from_user.id,
         base.EXPANSE_MESSAGE_START
     )
     await ExpanseState.value.set()

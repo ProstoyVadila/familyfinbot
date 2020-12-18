@@ -1,3 +1,5 @@
+from typing import Union
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
@@ -15,11 +17,13 @@ PERIODS = {
 }
 
 
+@dp.message_handler(commands=['budget'])
 @dp.callback_query_handler(lambda callback: callback.data == 'budget_button')
-async def get_budget(callback: types.CallbackQuery):
-    await callback.answer(cache_time=60)
+async def get_budget(answer_object: Union[types.Message, types.CallbackQuery]):
+    if isinstance(answer_object, types.CallbackQuery):
+        await answer_object.answer(cache_time=60)
     await bot.send_message(
-        callback.from_user.id,
+        answer_object.from_user.id,
         base.BUDGET_MESSAGE_START,
         reply_markup=budget_keyboard
     )
@@ -29,7 +33,7 @@ async def get_budget(callback: types.CallbackQuery):
 @dp.message_handler(state=BudgetState.period)
 async def get_budget_period(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        data['period'] = PERIODS[message.text]
+        data['period'] = message.text
 
     await message.answer(
         base.BUDGET_MESSAGE_END,
