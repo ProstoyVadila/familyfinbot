@@ -23,7 +23,7 @@ async def get_income(answer_object: Union[types.Message, types.CallbackQuery]):
 
 
 @dp.message_handler(state=ExpanseState.value)
-async def get_expanse_value(message: types.Message, state: FSMContext):
+async def get_expense_value(message: types.Message, state: FSMContext):
     value = parse_value(message.text)
     if value:
         async with state.proxy() as data:
