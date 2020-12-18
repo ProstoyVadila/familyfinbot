@@ -56,4 +56,4 @@ async def get_budget_value(message: types.Message, state: FSMContext):
         )
         await state.finish()
     else:
-        await message.answer(error.PARSE_INT_ERROR_MESSAGE)
+        await message.answer(error.PARSE_VALUE_ERROR_MESSAGE)

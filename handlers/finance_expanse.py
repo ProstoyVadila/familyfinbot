@@ -32,7 +32,7 @@ async def get_expanse_value(message: types.Message, state: FSMContext):
         )
         await ExpanseState.next()
     else:
-        await message.answer(error.PARSE_INT_ERROR_MESSAGE)
+        await message.answer(error.PARSE_VALUE_ERROR_MESSAGE)
 
 
 @dp.message_handler(state=ExpanseState.category)
