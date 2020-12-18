@@ -22,3 +22,38 @@ budget_markup = InlineKeyboardMarkup(
         ]
     ]
 )
+
+stats_markup = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text='Узнать баланс',
+                callback_data='balance_stats_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='График трат',
+                callback_data='plot1_stats_button'
+            )
+        ]
+    ]
+)
+
+back_stats_markup = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text='Вернуться назад',
+                callback_data='statistics_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Вернуться в меню',
+                callback_data='menu_button'
+            )
+        ]
+    ]
+)
+
