@@ -19,3 +19,9 @@ async def get_menu(callback: types.CallbackQuery = None):
         MENU_MESSAGE,
         reply_markup=menu_markup
     )
+
+
+@dp.message_handler(lambda message: message.text == 'меню')
+@dp.message_handler(commands=['menu'])
+async def get_menu(message: types.Message):
+    await message.answer(MENU_MESSAGE, reply_markup=menu_markup)

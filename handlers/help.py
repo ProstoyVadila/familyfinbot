@@ -16,3 +16,10 @@ async def get_help(callback: types.CallbackQuery):
         help_message,
         reply_markup=back_to_menu_markup
     )
+
+
+@dp.message_handler(CommandHelp())
+async def get_help(message: types.Message):
+    help_message = HELP_MESSAGE.format(
+        user_name=message.from_user.id) + '\n'.join(HELP_MESSAGE_COMMANDS)
+    await message.answer(help_message, reply_markup=back_to_menu_markup)
