@@ -7,7 +7,7 @@ from app import dp, bot
 from messages import base, error
 from keyboards.finance_keyboard import income_category_keyboard, menu_keyboard
 from states.finance_states import IncomeState
-from utils.extractor import parse_value
+from utils.extractors import parse_value
 
 
 @dp.message_handler(commands=['income'])

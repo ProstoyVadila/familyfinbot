@@ -5,7 +5,6 @@ from typing import Optional
 def parse_value(message_raw: str) -> Optional[float]:
     if message_raw.isdigit():
         return float(message_raw)
-    # message = message_raw.replace(' ', '')
     message = re.sub(r'\s+', ' ', message_raw)
     regexp = re.search(r'([.]?\d[\d\s.,]*)', message, re.VERBOSE)
     if regexp:

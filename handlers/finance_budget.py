@@ -8,7 +8,7 @@ from messages import base, error
 from keyboards.finance_keyboard import budget_keyboard
 from keyboards.inline.start_markups import back_to_menu_markup
 from states.finance_states import BudgetState
-from utils.extractor import parse_value
+from utils.extractors import parse_value
 
 
 PERIODS = {
