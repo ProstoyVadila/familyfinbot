@@ -8,8 +8,7 @@ def parse_value(message_raw: str) -> Optional[float]:
     message = re.sub(r'\s+', ' ', message_raw)
     regexp = re.search(r'([.]?\d[\d\s.,]*)', message, re.VERBOSE)
     if regexp:
-        print(regexp)
         value = regexp.group(0).replace(',', '.')
-        print(value)
-        return float(value)
+        value_float = float(value)
+        return round(value_float, 2)
     return None

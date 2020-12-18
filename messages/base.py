@@ -68,7 +68,8 @@ EXPANSE_MESSAGE_END = 'Предлагаю также добавить катег
                       'запишите ее или выберите одну ' \
                       'из существующих категорий.'
 
-YOUR_TRANSACTION_MESSAGE = 'Вы внесли — {value} на {category}.'
+YOUR_TRANSACTION_MESSAGE = 'Вы внесли:\nСумма: {value}' \
+                           '\nКатегория: {category}'
 
 
 # income messages
