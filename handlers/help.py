@@ -12,14 +12,13 @@ from keyboards.inline.start_markups import back_to_menu_markup
 @dp.callback_query_handler(lambda callback: callback.data == 'about_button')
 async def get_help(answer_object: Union[types.Message, types.CallbackQuery]):
     help_message = HELP_MESSAGE.format(
-        user_name=answer_object.from_user.id) + '\n'.join(HELP_MESSAGE_COMMANDS)
+        user_name=answer_object.from_user.username) \
+                   + '\n'.join(HELP_MESSAGE_COMMANDS)
 
-    if isinstance(answer_object, types.Message):
-        await answer_object.answer(help_message, reply_markup=back_to_menu_markup)
-    else:
+    if isinstance(answer_object, types.CallbackQuery):
         await answer_object.answer(cache_time=60)
-        await bot.send_message(
-            answer_object.from_user.id,
-            help_message,
-            reply_markup=back_to_menu_markup
-        )
+    await bot.send_message(
+        answer_object.from_user.id,
+        help_message,
+        reply_markup=back_to_menu_markup
+    )

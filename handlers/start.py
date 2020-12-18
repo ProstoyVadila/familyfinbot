@@ -17,12 +17,10 @@ async def start_bot(message: types.Message):
 @dp.message_handler(lambda message: message.text == 'меню')
 @dp.callback_query_handler(lambda callback: callback.data == 'menu_button')
 async def get_menu(answer_object: Union[types.Message, types.CallbackQuery]):
-    if isinstance(answer_object, types.Message):
-        await answer_object.answer(MENU_MESSAGE, reply_markup=menu_markup)
-    else:
+    if isinstance(answer_object, types.CallbackQuery):
         await answer_object.answer(cache_time=60)
-        await bot.send_message(
-            answer_object.from_user.id,
-            MENU_MESSAGE,
-            reply_markup=menu_markup
-        )
+    await bot.send_message(
+        answer_object.from_user.id,
+        MENU_MESSAGE,
+        reply_markup=menu_markup
+    )

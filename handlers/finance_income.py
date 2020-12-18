@@ -1,3 +1,5 @@
+from typing import Union
+
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
@@ -5,13 +7,17 @@ from app import dp, bot
 from messages import base, error
 from keyboards.finance_keyboard import income_category_keyboard, menu_keyboard
 from states.finance_states import IncomeState
+from utils.extractors import parse_value
 
 
+@dp.message_handler(commands=['income'])
 @dp.callback_query_handler(lambda callback: callback.data == 'income_button')
-async def get_income(callback: types.CallbackQuery):
-    await callback.answer(cache_time=60)
+async def get_income(answer_object: Union[types.Message, types.CallbackQuery]):
+    if isinstance(answer_object, types.CallbackQuery):
+        await answer_object.answer(cache_time=60)
+
     await bot.send_message(
-        callback.from_user.id,
+        answer_object.from_user.id,
         base.INCOME_MESSAGE_START
     )
     await IncomeState.value.set()
@@ -19,16 +25,17 @@ async def get_income(callback: types.CallbackQuery):
 
 @dp.message_handler(state=IncomeState.value)
 async def get_income_value(message: types.Message, state: FSMContext):
-    if message.text.isdigit():
+    value = parse_value(message.text)
+    if value:
         async with state.proxy() as data:
-            data['value'] = message.text
+            data['value'] = value
         await message.answer(
             base.INCOME_MESSAGE_END,
             reply_markup=income_category_keyboard
         )
         await IncomeState.next()
     else:
-        await message.answer(error.PARSE_INT_ERROR_MESSAGE)
+        await message.answer(error.PARSE_VALUE_ERROR_MESSAGE)
 
 
 @dp.message_handler(state=IncomeState.category)
