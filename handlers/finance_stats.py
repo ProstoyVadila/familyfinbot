@@ -4,7 +4,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 from app import dp, bot
-from messages import base, error
+from messages import finance, error
 from keyboards.finance_keyboard import menu_keyboard
 from keyboards.inline import finance_markups
 from states.finance_states import IncomeState
@@ -20,7 +20,7 @@ async def get_stats(types_object: Union[types.Message, types.CallbackQuery]):
         await types_object.answer(cache_time=60)
     await bot.send_message(
         types_object.from_user.id,
-        base.STATS_MESSAGE_START,
+        finance.STATS_MESSAGE_START,
         reply_markup=finance_markups.stats_markup
     )
 
@@ -33,7 +33,7 @@ async def get_balance(types_object: Union[types.Message, types.CallbackQuery]):
 
     await bot.send_message(
         types_object.from_user.id,
-        base.BALANCE_STATS_MESSAGE,
+        finance.BALANCE_STATS_MESSAGE,
         reply_markup=finance_markups.back_stats_markup
     )
 
@@ -46,7 +46,7 @@ async def get_graph(types_object: Union[types.Message, types.CallbackQuery]):
 
     await bot.send_message(
         types_object.from_user.id,
-        base.GRAPH_STATS_MESSAGE,
+        finance.GRAPH_STATS_MESSAGE,
         reply_markup=finance_markups.graphs_stats_markup
     )
 
@@ -56,6 +56,6 @@ async def get_expanse_by_categories_graph(callback: types.CallbackQuery):
     await callback.answer(cache_time=60)
     await bot.send_message(
         callback.from_user.id,
-        base.YOUR_GRAPH_MESSAGE + f'\n your graph is {callback.data}',
+        finance.YOUR_GRAPH_MESSAGE + f'\n your graph is {callback.data}',
         reply_markup=finance_markups.back_stats_markup
     )

@@ -4,7 +4,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 from app import dp, bot
-from messages import base, error
+from messages import finance, error
 from keyboards.finance_keyboard import budget_keyboard
 from keyboards.inline.start_markups import back_to_menu_markup
 from states.finance_states import BudgetState
@@ -25,7 +25,7 @@ async def get_budget(types_object: Union[types.Message, types.CallbackQuery]):
         await types_object.answer(cache_time=60)
     await bot.send_message(
         types_object.from_user.id,
-        base.BUDGET_MESSAGE_START,
+        finance.BUDGET_MESSAGE_START,
         reply_markup=budget_keyboard
     )
     await BudgetState.period.set()
@@ -37,7 +37,7 @@ async def get_budget_period(message: types.Message, state: FSMContext):
         data['period'] = message.text
 
     await message.answer(
-        base.BUDGET_MESSAGE_END,
+        finance.BUDGET_MESSAGE_END,
         reply_markup=types.ReplyKeyboardRemove()
     )
     await BudgetState.next()
@@ -50,7 +50,7 @@ async def get_budget_value(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
             data['value'] = value
         await message.answer(
-            base.YOUR_BUDGET_MESSAGE.format(
+            finance.YOUR_BUDGET_MESSAGE.format(
                 value=data['value'],
                 period=data['period']
             ),

@@ -61,13 +61,13 @@ graphs_stats_markup = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='Расходы по категориям за выбранный период',
+                text='Мои расходы по категориям',
                 callback_data='graph1_button'
             )
         ],
         [
             InlineKeyboardButton(
-                text='Доходы за выбранный период',
+                text='Мои доходы по категориям',
                 callback_data='graph2_button'
             )
         ],

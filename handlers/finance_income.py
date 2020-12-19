@@ -4,7 +4,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 from app import dp, bot
-from messages import base, error
+from messages import finance, error
 from keyboards.finance_keyboard import income_category_keyboard, menu_keyboard
 from states.finance_states import IncomeState
 from utils.extractors import parse_value
@@ -18,7 +18,7 @@ async def get_income(types_object: Union[types.Message, types.CallbackQuery]):
 
     await bot.send_message(
         types_object.from_user.id,
-        base.INCOME_MESSAGE_START
+        finance.INCOME_MESSAGE_START
     )
     await IncomeState.value.set()
 
@@ -30,7 +30,7 @@ async def get_income_value(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
             data['value'] = value
         await message.answer(
-            base.INCOME_MESSAGE_END,
+            finance.INCOME_MESSAGE_END,
             reply_markup=income_category_keyboard
         )
         await IncomeState.next()
@@ -43,7 +43,7 @@ async def get_income_category(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['category'] = message.text
     await message.answer(
-        base.YOUR_TRANSACTION_MESSAGE.format(
+        finance.YOUR_TRANSACTION_MESSAGE.format(
             value=data['value'],
             category=data['category']
         ),

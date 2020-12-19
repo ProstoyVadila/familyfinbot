@@ -4,7 +4,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 from app import dp, bot
-from messages import base, error
+from messages import finance, error
 from keyboards.finance_keyboard import expanse_category_keyboard, menu_keyboard
 from states.finance_states import ExpanseState
 from utils.extractors import parse_value
@@ -17,7 +17,7 @@ async def get_expense(types_object: Union[types.Message, types.CallbackQuery]):
         await types_object.answer(cache_time=60)
     await bot.send_message(
         types_object.from_user.id,
-        base.EXPENSE_MESSAGE_START
+        finance.EXPENSE_MESSAGE_START
     )
     await ExpanseState.value.set()
 
@@ -29,7 +29,7 @@ async def get_expense_value(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
             data['value'] = value
         await message.answer(
-            base.EXPENSE_MESSAGE_END,
+            finance.EXPENSE_MESSAGE_END,
             reply_markup=expanse_category_keyboard
         )
         await ExpanseState.next()
@@ -42,7 +42,7 @@ async def get_expense_category(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['category'] = message.text
     await message.answer(
-        base.YOUR_TRANSACTION_MESSAGE.format(
+        finance.YOUR_TRANSACTION_MESSAGE.format(
             value=data['value'],
             category=data['category']
         ),
