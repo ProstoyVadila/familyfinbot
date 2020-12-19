@@ -12,12 +12,12 @@ from utils.extractors import parse_value
 
 @dp.message_handler(commands=['expense'])
 @dp.callback_query_handler(lambda callback: callback.data == 'expense_button')
-async def get_income(answer_object: Union[types.Message, types.CallbackQuery]):
-    if isinstance(answer_object, types.CallbackQuery):
-        await answer_object.answer(cache_time=60)
+async def get_expense(types_object: Union[types.Message, types.CallbackQuery]):
+    if isinstance(types_object, types.CallbackQuery):
+        await types_object.answer(cache_time=60)
     await bot.send_message(
-        answer_object.from_user.id,
-        base.EXPANSE_MESSAGE_START
+        types_object.from_user.id,
+        base.EXPENSE_MESSAGE_START
     )
     await ExpanseState.value.set()
 
@@ -29,7 +29,7 @@ async def get_expense_value(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
             data['value'] = value
         await message.answer(
-            base.EXPANSE_MESSAGE_END,
+            base.EXPENSE_MESSAGE_END,
             reply_markup=expanse_category_keyboard
         )
         await ExpanseState.next()
@@ -38,7 +38,7 @@ async def get_expense_value(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(state=ExpanseState.category)
-async def get_expanse_category(message: types.Message, state: FSMContext):
+async def get_expense_category(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['category'] = message.text
     await message.answer(
