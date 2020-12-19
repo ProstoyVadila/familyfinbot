@@ -34,7 +34,7 @@ stats_markup = InlineKeyboardMarkup(
         [
             InlineKeyboardButton(
                 text='График трат',
-                callback_data='plot1_stats_button'
+                callback_data='graphs_stats_button'
             )
         ]
     ]
@@ -57,3 +57,25 @@ back_stats_markup = InlineKeyboardMarkup(
     ]
 )
 
+graphs_stats_markup = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text='Расходы по категориям за выбранный период',
+                callback_data='graph1_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Доходы за выбранный период',
+                callback_data='graph2_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Назад',
+                callback_data='statistics_button'
+            )
+        ]
+    ]
+)
