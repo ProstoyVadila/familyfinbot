@@ -20,11 +20,11 @@ PERIODS = {
 
 @dp.message_handler(commands=['budget'])
 @dp.callback_query_handler(lambda callback: callback.data == 'budget_button')
-async def get_budget(answer_object: Union[types.Message, types.CallbackQuery]):
-    if isinstance(answer_object, types.CallbackQuery):
-        await answer_object.answer(cache_time=60)
+async def get_budget(types_object: Union[types.Message, types.CallbackQuery]):
+    if isinstance(types_object, types.CallbackQuery):
+        await types_object.answer(cache_time=60)
     await bot.send_message(
-        answer_object.from_user.id,
+        types_object.from_user.id,
         base.BUDGET_MESSAGE_START,
         reply_markup=budget_keyboard
     )
