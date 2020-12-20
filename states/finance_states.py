@@ -15,3 +15,7 @@ class IncomeState(StatesGroup):
     value = State()
     category = State()
 
+
+# rewrite to other state file
+class FeedbackState(StatesGroup):
+    message = State()
