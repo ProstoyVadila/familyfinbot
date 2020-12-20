@@ -3,14 +3,19 @@ from typing import Union
 from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 
-from app import dp, bot
+from app import bot, dp
 from messages.base import START_MESSAGE, MENU_MESSAGE
+from model.models.user import User
 from keyboards.inline.start_markups import start_markup, menu_markup
 
 
 @dp.message_handler(CommandStart())
 async def start_bot(message: types.Message):
     await message.answer(START_MESSAGE, reply_markup=start_markup)
+    await User.get_or_create(
+        message.chat.id,
+        message.from_user.full_name
+    )
 
 
 @dp.message_handler(commands=['menu'])
