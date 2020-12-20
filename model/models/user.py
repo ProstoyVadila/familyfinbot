@@ -2,6 +2,7 @@ from aiogram.dispatcher.storage import FSMContextProxy
 from sqlalchemy import sql
 
 from model.db_gino import db, TimeBaseModel
+from utils.converter import convert_to_budget
 
 
 class User(TimeBaseModel):
@@ -23,9 +24,11 @@ class User(TimeBaseModel):
     @classmethod
     async def update_budget(cls, user_id: int, value: float, period: str):
         user = await cls.get_or_create(user_id)
-        await user.update(user_budget=value).apply()
+        budget = convert_to_budget(value, period)
+        await user.update(user_budget=budget).apply()
 
     @classmethod
-    async def get_budget(cls, user_id):
+    async def get_budget(cls, user_id) -> float:
         user = await cls.get(user_id)
-        print(f"VASH BUDGET {user.user_budget}")
+        return user.user_budget
+

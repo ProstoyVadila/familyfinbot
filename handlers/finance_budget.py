@@ -43,6 +43,7 @@ async def get_budget_value(message: types.Message, state: FSMContext):
     if value:
         async with state.proxy() as data:
             data['value'] = value
+
         await User.update_budget(
             user_id=message.from_user.id,
             value=data['value'],
