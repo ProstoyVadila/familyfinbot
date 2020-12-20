@@ -6,7 +6,7 @@ import sqlalchemy as sa
 from aiogram import Dispatcher
 from gino import Gino
 
-from config import POSTGRES_URI
+import config
 
 
 db = Gino()
@@ -34,16 +34,18 @@ class TimeBaseModel(BaseModel):
 
     created_at = db.Column(db.DateTime(True), server_default=db.func.now())
     updated_at = db.Column(
-        db.DataTime(True),
+        db.DateTime(True),
         default=datetime.datetime.utcnow,
         onupdate=datetime.datetime.utcnow,
         server_default=db.func.now()
     )
 
 
-async def on_startup(dp: Dispatcher):
+async def on_startup():
     logging.info('Connecting to PostgreSQL')
-    await db.set_bind(POSTGRES_URI)
+    await db.set_bind(config.POSTGRES_URI)
+    await db.gino.drop_all()
+    await db.gino.create_all()
 
 
 async def on_shutdown(dp: Dispatcher):
