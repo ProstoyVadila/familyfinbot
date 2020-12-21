@@ -5,6 +5,7 @@ from aiogram.dispatcher import FSMContext
 
 from app import dp, bot
 from messages import finance, error
+from model.models.transaction import Finance
 from keyboards.finance_keyboard import expanse_category_keyboard, menu_keyboard
 from states.finance_states import ExpanseState
 from utils.extractors import parse_value
@@ -47,5 +48,11 @@ async def get_expense_category(message: types.Message, state: FSMContext):
             category=data['category']
         ),
         reply_markup=menu_keyboard
+    )
+    await Finance.add_transaction(
+        user_id=message.from_user.id,
+        value=data['value'],
+        is_expanse=True,
+        category=data['category']
     )
     await state.finish()
