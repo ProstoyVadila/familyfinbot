@@ -1,4 +1,3 @@
-from aiogram.dispatcher.storage import FSMContextProxy
 from sqlalchemy import sql
 
 from model.db_gino import db, TimeBaseModel
@@ -31,4 +30,3 @@ class User(TimeBaseModel):
     async def get_budget(cls, user_id) -> float:
         user = await cls.get(user_id)
         return user.user_budget
-
