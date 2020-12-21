@@ -21,10 +21,18 @@ class Finance(TimeBaseModel):
     async def add_transaction(cls, user_id: int, value: int,
                               is_expanse: bool, category: str):
         user = await User.get_or_create(user_id)
-        category_from_db = await Category.get_or_get_category(category, is_expanse)
+        category_from_db = await Category.get_or_create(category, is_expanse)
         await cls.create(
             user_id=user_id,
             value=value,
             is_expanse=is_expanse,
             category_id=category_from_db.category_id
         )
+
+    @classmethod
+    async def get_transactions(cls, user_id: int, period: str, is_expense: bool):
+        pass
+
+    @classmethod
+    async def save_csv(cls, user_id: int):
+        pass

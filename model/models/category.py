@@ -13,7 +13,7 @@ class Category(TimeBaseModel):
     query: sql.Select
 
     @classmethod
-    async def get_or_get_category(cls, name: str, is_expense: bool):
+    async def get_or_create(cls, name: str, is_expense: bool):
         category = await cls.query.where(cls.category_name == name).gino.first()
         if not category:
             return await cls.create(
@@ -21,3 +21,7 @@ class Category(TimeBaseModel):
                 is_expense=is_expense
             )
         return category
+
+    @classmethod
+    async def get_categories(cls, *names):
+        pass
