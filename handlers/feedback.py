@@ -30,4 +30,3 @@ async def send_feedback(message: types.Message, state: FSMContext):
         reply_markup=back_to_menu_markup
     )
     await state.finish()
-
