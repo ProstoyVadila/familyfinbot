@@ -6,6 +6,8 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 import config
 from admin.notify import notify_admin_on_startup
 from model import db_gino
+from utils.default_commands import set_default_commands
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -18,6 +20,7 @@ dp = Dispatcher(bot, storage=storage)
 async def on_startup(dp: Dispatcher):
     await notify_admin_on_startup(dp)
     await db_gino.on_startup()
+    await set_default_commands(dp)
 
 
 if __name__ == '__main__':
