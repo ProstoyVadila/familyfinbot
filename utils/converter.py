@@ -9,10 +9,10 @@ def get_days_by_month() -> int:
 
 
 def convert_to_budget(value: float, period: str) -> float:
-    PERIODS = {
+    periods = {
         'на день': 1,
         'на неделю': 7,
         'на месяц': get_days_by_month()
     }
-    return round(value / PERIODS[period], 2)
+    return round(value / periods[period], 2)
 
