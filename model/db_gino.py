@@ -1,4 +1,3 @@
-import datetime
 import logging
 from typing import List
 
@@ -35,8 +34,8 @@ class TimeBaseModel(BaseModel):
     created_at = db.Column(db.DateTime(True), server_default=db.func.now())
     updated_at = db.Column(
         db.DateTime(True),
-        default=datetime.datetime.utcnow,
-        onupdate=datetime.datetime.utcnow,
+        default=db.func.now(),
+        onupdate=db.func.now(),
         server_default=db.func.now()
     )
 
@@ -44,7 +43,7 @@ class TimeBaseModel(BaseModel):
 async def on_startup():
     logging.info('Connecting to PostgreSQL')
     await db.set_bind(config.POSTGRES_URI)
-    # await db.gino.drop_all()
+    await db.gino.drop_all()
     await db.gino.create_all()
 
 

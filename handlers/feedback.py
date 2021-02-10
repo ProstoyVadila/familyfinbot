@@ -19,11 +19,11 @@ async def send_feedback(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['message'] = message.text
 
-    to_admin = base.SEND_FEEDBACK_TO_ADMIN + data['message']
+    message_to_admin = base.SEND_FEEDBACK_TO_ADMIN + data['message']
 
     await bot.send_message(
         ADMIN_ID,
-        to_admin
+        message_to_admin
     )
     await message.answer(
         base.THANKS_MESSAGE,
