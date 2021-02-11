@@ -53,7 +53,7 @@ async def get_income_category(message: types.Message, state: FSMContext):
     await Finance.add_transaction(
         user_id=message.from_user.id,
         value=data['value'],
-        is_expanse=False,
+        is_expense=False,
         category=data['category']
     )
     await state.finish()

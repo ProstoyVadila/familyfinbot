@@ -7,7 +7,7 @@ from app import dp, bot
 from messages import finance, error
 from model.models.transaction import Finance
 from keyboards.finance_keyboard import expanse_category_keyboard, menu_keyboard
-from states.finance_states import ExpanseState
+from states.finance_states import ExpenseState
 from utils.extractors import parse_value
 
 
@@ -20,10 +20,10 @@ async def get_expense(types_object: Union[types.Message, types.CallbackQuery]):
         types_object.from_user.id,
         finance.EXPENSE_MESSAGE_START
     )
-    await ExpanseState.value.set()
+    await ExpenseState.value.set()
 
 
-@dp.message_handler(state=ExpanseState.value)
+@dp.message_handler(state=ExpenseState.value)
 async def get_expense_value(message: types.Message, state: FSMContext):
     value = parse_value(message.text)
     if value:
@@ -33,12 +33,12 @@ async def get_expense_value(message: types.Message, state: FSMContext):
             finance.EXPENSE_MESSAGE_END,
             reply_markup=expanse_category_keyboard
         )
-        await ExpanseState.next()
+        await ExpenseState.next()
     else:
         await message.answer(error.PARSE_VALUE_ERROR_MESSAGE)
 
 
-@dp.message_handler(state=ExpanseState.category)
+@dp.message_handler(state=ExpenseState.category)
 async def get_expense_category(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['category'] = message.text
@@ -52,7 +52,7 @@ async def get_expense_category(message: types.Message, state: FSMContext):
     await Finance.add_transaction(
         user_id=message.from_user.id,
         value=data['value'],
-        is_expanse=True,
+        is_expense=True,
         category=data['category']
     )
     await state.finish()
