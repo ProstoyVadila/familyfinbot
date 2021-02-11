@@ -4,6 +4,7 @@ from aiogram import types
 
 from app import dp, bot
 from messages import finance
+from model.models.transaction import Finance
 from keyboards.inline import finance_markups
 
 
@@ -28,9 +29,14 @@ async def get_balance(types_object: Union[types.Message, types.CallbackQuery]):
     if isinstance(types_object, types.CallbackQuery):
         await types_object.answer(cache_time=60)
 
+    balance, budget = await Finance.get_balance(types_object.from_user.id)
+    awnser_message = finance.BALANCE_STATS_MESSAGE.format(
+        balance=balance,
+        budget=budget
+    )
     await bot.send_message(
         types_object.from_user.id,
-        finance.BALANCE_STATS_MESSAGE,
+        awnser_message,
         reply_markup=finance_markups.back_stats_markup
     )
 

@@ -6,7 +6,7 @@ class BudgetState(StatesGroup):
     value = State()
 
 
-class ExpanseState(StatesGroup):
+class ExpenseState(StatesGroup):
     value = State()
     category = State()
 

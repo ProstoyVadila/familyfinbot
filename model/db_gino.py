@@ -43,7 +43,7 @@ class TimeBaseModel(BaseModel):
 async def on_startup():
     logging.info('Connecting to PostgreSQL')
     await db.set_bind(config.POSTGRES_URI)
-    await db.gino.drop_all()
+    # await db.gino.drop_all()
     await db.gino.create_all()
 
 
