@@ -1,3 +1,5 @@
+from typing import Optional, List
+
 from sqlalchemy import sql
 
 from model.db_gino import db, TimeBaseModel
@@ -13,7 +15,7 @@ class Category(TimeBaseModel):
     query: sql.Select
 
     @classmethod
-    async def get_or_create(cls, name: str, is_expense: bool):
+    async def get_or_create(cls, name: str, is_expense: bool) -> ['Category']:
         category = await cls.query.where(cls.category_name == name).gino.first()
         if not category:
             return await cls.create(
@@ -23,5 +25,14 @@ class Category(TimeBaseModel):
         return category
 
     @classmethod
-    async def get_categories(cls, *names):
-        pass
+    async def get_category_by_id(cls, id_: int) -> Optional['Category']:
+        return await cls.query.where(cls.category_id == id_).gino.first()
+
+    @classmethod
+    async def get_category_names_by_ids(cls, ids: List[int]) -> Optional[List[str]]:
+        categories = [
+            await cls.get_category_by_id(id_)
+            for id_ in ids
+            if cls.get_category_by_id(id_) is not None
+        ]
+        return [item.category_name for item in categories]
