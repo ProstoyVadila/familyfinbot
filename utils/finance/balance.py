@@ -1,9 +1,12 @@
 from datetime import date
 from typing import Any, NamedTuple, List
 
+from messages import finance
 from model.models.category import Category
 from model.models.transaction import Finance
 from model.models.user import User
+
+from ..converter import format_datetime_to_time
 
 
 class BalanceData(NamedTuple):
@@ -39,3 +42,19 @@ async def get_balance_by_id_by_date(user_id: int, from_date: date) -> BalanceDat
         balance=balance,
         transactions_data=transactions_data
     )
+
+
+def get_transaction_message(data: BalanceData.transactions_data) -> str:
+    if not data:
+        return finance.BALANCE_EMPTY_DATA_MESSAGE
+
+    data_format = '{created_at:10} --   {value:.2f} руб. -- {category:10}'
+    data_message = '\n'.join([
+        data_format.format(
+            category=item[1],
+            value=item[0].value,
+            created_at=format_datetime_to_time(item[0].created_at)
+        )
+        for item in data
+    ])
+    return finance.BALANCE_TRANS_DATA_MESSAGE + data_message

@@ -7,7 +7,7 @@ from app import dp, bot
 from messages import finance
 from model.models.transaction import Finance
 from keyboards.inline import finance_markups
-from utils.finance.balance import get_balance_by_id_by_date
+from utils.finance.balance import get_balance_by_id_by_date, get_transaction_message
 
 
 GRAPHS_CALLBACK_DATA = ('graph1_button', 'graph2_button')
@@ -32,25 +32,20 @@ async def get_balance(types_object: Union[types.Message, types.CallbackQuery]):
         await types_object.answer(cache_time=60)
 
     balance_data = await get_balance_by_id_by_date(types_object.from_user.id, date.today())
-    answer_message = finance.BALANCE_STATS_MESSAGE.format(
+    balance_message = finance.BALANCE_STATS_MESSAGE.format(
         balance=balance_data.balance,
         budget=balance_data.budget
     )
     await bot.send_message(
         types_object.from_user.id,
-        answer_message,
+        balance_message)
+
+    transaction_message = get_transaction_message(balance_data.transactions_data)
+    await bot.send_message(
+        types_object.from_user.id,
+        transaction_message,
         reply_markup=finance_markups.back_stats_markup
     )
-    if transactions := balance_data.transactions_data:
-        trans_message = ' '.join([
-            f'{item[1]} -- {item[0].value} руб. -- {item[0].created_at}\n'
-            for item in transactions
-        ])
-        await bot.send_message(
-            types_object.from_user.id,
-            finance.BALANCE_TRANS_DATA_MESSAGE + trans_message,
-            reply_markup=finance_markups.back_stats_markup
-        )
 
 
 @dp.message_handler(commands=['graphs'])

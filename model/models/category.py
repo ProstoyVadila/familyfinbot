@@ -33,6 +33,6 @@ class Category(TimeBaseModel):
         categories = [
             await cls.get_category_by_id(id_)
             for id_ in ids
-            if cls.get_category_by_id(id_) is not None
+            if await cls.get_category_by_id(id_) is not None
         ]
         return [item.category_name for item in categories]

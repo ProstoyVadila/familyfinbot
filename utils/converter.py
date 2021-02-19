@@ -16,3 +16,10 @@ def convert_to_budget(value: float, period: str) -> float:
     }
     return round(value / periods[period], 2)
 
+
+def format_datetime(datetime_: datetime) -> str:
+    return datetime_.strftime('%y-%m-%d %H:%M:%S')
+
+
+def format_datetime_to_time(datetime_: datetime) -> str:
+    return datetime_.strftime('%H:%M:%S')
