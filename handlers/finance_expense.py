@@ -9,15 +9,15 @@ from model.models.transaction import Finance
 from keyboards.finance_keyboard import expanse_category_keyboard, menu_keyboard
 from states.finance_states import ExpenseState
 from utils.extractors import parse_value
+from utils.tools import answer_if_callback
 
 
 @dp.message_handler(commands=['expense'])
 @dp.callback_query_handler(lambda callback: callback.data == 'expense_button')
-async def get_expense(types_object: Union[types.Message, types.CallbackQuery]):
-    if isinstance(types_object, types.CallbackQuery):
-        await types_object.answer(cache_time=60)
+async def get_expense(msg_or_callback: Union[types.Message, types.CallbackQuery]):
+    await answer_if_callback(msg_or_callback)
     await bot.send_message(
-        types_object.from_user.id,
+        msg_or_callback.from_user.id,
         finance.EXPENSE_MESSAGE_START
     )
     await ExpenseState.value.set()
