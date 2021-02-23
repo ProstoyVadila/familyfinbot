@@ -3,7 +3,7 @@ from typing import List
 
 from sqlalchemy import sql
 
-from model.db_gino import db, TimeBaseModel
+from models.db_gino import db, TimeBaseModel
 
 from .user import User
 from .category import Category

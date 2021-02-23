@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from sqlalchemy import sql
 
-from model.db_gino import db, TimeBaseModel
+from models.db_gino import db, TimeBaseModel
 
 
 class Category(TimeBaseModel):

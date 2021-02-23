@@ -4,10 +4,9 @@ from typing import Union
 from aiogram import types
 
 from app import dp, bot
-from messages import finance
-from model.models.transaction import Finance
-from keyboards.inline import finance_markups
-from utils.finance.balance import get_balance_by_id_by_date, get_transaction_message
+from utils.messages import finance
+from utils.keyboards.inline import finance_markups
+from controllers.finance.balance import get_balance_by_id_by_date, get_transaction_message
 from utils.tools import answer_if_callback
 
 

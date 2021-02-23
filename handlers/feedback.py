@@ -3,9 +3,9 @@ from aiogram.dispatcher import FSMContext
 
 from app import dp, bot
 from config import ADMIN_ID
-from keyboards.inline.start_markups import back_to_menu_markup
-from messages import base
-from states.finance_states import FeedbackState
+from utils.keyboards.inline.start_markups import back_to_menu_markup
+from utils.messages import base
+from models.states.finance_states import FeedbackState
 
 
 @dp.message_handler(commands=['feedback'])

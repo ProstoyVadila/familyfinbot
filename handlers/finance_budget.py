@@ -4,11 +4,11 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 from app import dp, bot
-from messages import finance, error
-from model.models.user import User
-from keyboards.finance_keyboard import budget_keyboard
-from keyboards.inline.start_markups import back_to_menu_markup
-from states.finance_states import BudgetState
+from utils.messages import finance, error
+from models.db.user import User
+from utils.keyboards.finance_keyboard import budget_keyboard
+from utils.keyboards.inline.start_markups import back_to_menu_markup
+from models.states.finance_states import BudgetState
 from utils.extractors import parse_value
 from utils.tools import answer_if_callback
 

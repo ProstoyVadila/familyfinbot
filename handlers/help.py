@@ -4,8 +4,8 @@ from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandHelp
 
 from app import dp, bot
-from messages.base import HELP_MESSAGE, HELP_MESSAGE_COMMANDS
-from keyboards.inline.start_markups import back_to_menu_markup
+from utils.messages.base import HELP_MESSAGE, HELP_MESSAGE_COMMANDS
+from utils.keyboards.inline.start_markups import back_to_menu_markup
 from utils.tools import answer_if_callback
 
 

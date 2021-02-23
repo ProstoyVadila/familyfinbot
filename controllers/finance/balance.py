@@ -1,12 +1,12 @@
 from datetime import date
 from typing import Any, NamedTuple, List
 
-from messages import finance
-from model.models.category import Category
-from model.models.transaction import Finance
-from model.models.user import User
+from utils.messages import finance
+from models.db.category import Category
+from models.db.transaction import Finance
+from models.db.user import User
 
-from ..converter import format_datetime_to_time
+from utils.converter import format_datetime_to_time
 
 
 class BalanceData(NamedTuple):
