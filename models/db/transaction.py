@@ -9,10 +9,6 @@ from .user import User
 from .category import Category
 
 
-def is_more_than_period(time: date) -> bool:
-    pass
-
-
 class Finance(TimeBaseModel):
     __tablename__ = 'finance'
 

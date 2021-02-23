@@ -30,10 +30,3 @@ class User(TimeBaseModel):
     async def get_budget(cls, user_id) -> float:
         user = await cls.get_or_create(user_id)
         return user.user_budget
-
-    # @classmethod
-    # async def get_balance(cls, user_id) -> float:
-    #     budget = cls.get_budget(user_id)
-    #     transactions = Finance.get_transactions(user_id, "24", True)
-    #     print(f'\n\n_______________{transactions}\n\n_______________\n\n{type(transactions)}')
-    #     return budget
