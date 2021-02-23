@@ -4,9 +4,9 @@ from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 
 from app import bot, dp
-from messages.base import START_MESSAGE, MENU_MESSAGE
-from model.models.user import User
-from keyboards.inline.start_markups import start_markup, menu_markup
+from utils.messages.base import START_MESSAGE, MENU_MESSAGE
+from models.db.user import User
+from utils.keyboards.inline.start_markups import start_markup, menu_markup
 from utils.tools import answer_if_callback
 
 

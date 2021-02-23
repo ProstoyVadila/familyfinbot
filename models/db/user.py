@@ -1,6 +1,6 @@
 from sqlalchemy import sql
 
-from model.db_gino import db, TimeBaseModel
+from models.db_gino import db, TimeBaseModel
 from utils.converter import convert_to_budget
 
 

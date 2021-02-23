@@ -1,11 +1,12 @@
+from datetime import date
 from typing import Union
 
 from aiogram import types
 
 from app import dp, bot
-from messages import finance
-from model.models.transaction import Finance
-from keyboards.inline import finance_markups
+from utils.messages import finance
+from utils.keyboards.inline import finance_markups
+from controllers.finance.balance import get_balance_by_id_by_date, get_transaction_message
 from utils.tools import answer_if_callback
 
 
@@ -28,14 +29,19 @@ async def get_stats(msg_or_callback: Union[types.Message, types.CallbackQuery]):
 async def get_balance(msg_or_callback: Union[types.Message, types.CallbackQuery]):
     await answer_if_callback(msg_or_callback)
 
-    balance, budget = await Finance.get_balance(msg_or_callback.from_user.id)
-    awnser_message = finance.BALANCE_STATS_MESSAGE.format(
-        balance=balance,
-        budget=budget
+    balance_data = await get_balance_by_id_by_date(msg_or_callback.from_user.id, date.today())
+    balance_message = finance.BALANCE_STATS_MESSAGE.format(
+        balance=balance_data.balance,
+        budget=balance_data.budget
     )
     await bot.send_message(
         msg_or_callback.from_user.id,
-        awnser_message,
+        balance_message)
+
+    transaction_message = get_transaction_message(balance_data.transactions_data)
+    await bot.send_message(
+        msg_or_callback.from_user.id,
+        transaction_message,
         reply_markup=finance_markups.back_stats_markup
     )
 

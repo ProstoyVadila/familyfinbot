@@ -7,7 +7,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 import config
 from admin.notify import notify_admin_on_startup
-from model import db_gino
+from models import db_gino
 from utils.default_commands import set_default_commands
 
 

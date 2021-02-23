@@ -4,10 +4,10 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 from app import dp, bot
-from messages import finance, error
-from model.models.transaction import Finance
-from keyboards.finance_keyboard import income_category_keyboard, menu_keyboard
-from states.finance_states import IncomeState
+from utils.messages import finance, error
+from models.db.transaction import Finance
+from utils.keyboards.finance_keyboard import income_category_keyboard, menu_keyboard
+from models.states.finance_states import IncomeState
 from utils.extractors import parse_value
 from utils.tools import answer_if_callback
 
