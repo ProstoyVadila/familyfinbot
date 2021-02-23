@@ -9,16 +9,16 @@ from model.models.transaction import Finance
 from keyboards.finance_keyboard import income_category_keyboard, menu_keyboard
 from states.finance_states import IncomeState
 from utils.extractors import parse_value
+from utils.tools import answer_if_callback
 
 
 @dp.message_handler(commands=['income'])
 @dp.callback_query_handler(lambda callback: callback.data == 'income_button')
-async def get_income(types_object: Union[types.Message, types.CallbackQuery]):
-    if isinstance(types_object, types.CallbackQuery):
-        await types_object.answer(cache_time=60)
+async def get_income(msg_or_callback: Union[types.Message, types.CallbackQuery]):
+    await answer_if_callback(msg_or_callback)
 
     await bot.send_message(
-        types_object.from_user.id,
+        msg_or_callback.from_user.id,
         finance.INCOME_MESSAGE_START
     )
     await IncomeState.value.set()
