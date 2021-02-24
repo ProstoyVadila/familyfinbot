@@ -1,6 +1,6 @@
 from io import BytesIO
 from datetime import date
-from typing import Optional
+from typing import List, Optional
 
 from aiogram.types import InputFile
 
@@ -15,17 +15,20 @@ async def upload_data_to_csv(user_id: int, from_date: date = DEFAULT_DATE, field
     if field_names is None:
         field_names = DEFAULT_FIELD_NAMES
 
+    if data := await Finance.get_transactions(user_id=user_id, from_date=from_date):
+        output = construct_csv(data, field_names)
+        return InputFile(BytesIO(output.encode('utf8')), filename='your_data.csv')
+
+
+def construct_csv(data: List[Finance], field_names: str):
     columns = ','.join(field_names) + '\r\n'
     temp_list = []
 
-    if data := await Finance.get_transactions(user_id=user_id, from_date=from_date):
-        for item in data:
-            temp_list.append(','.join([
-                str(item.created_at),
-                str(item.value),
-                item.parent.category_name,
-                str(item.is_expense)
-            ]))
-        output = columns + '\r\n'.join(temp_list)
-
-        return InputFile(BytesIO(output.encode('utf8')), filename='your_data.csv')
+    for item in data:
+        temp_list.append(','.join([
+            str(item.created_at),
+            str(item.value),
+            item.parent.category_name,
+            str(item.is_expense)
+        ]))
+    return columns + '\r\n'.join(temp_list)
