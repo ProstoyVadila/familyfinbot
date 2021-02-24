@@ -34,14 +34,14 @@ class Finance(TimeBaseModel):
 
     @classmethod
     async def get_transactions(cls, user_id: int, from_date: date, is_expense: bool) -> List['Finance']:
-        transactions = await cls.query.where(
+        loader = cls.load(parent=Category.on(cls.category_id == Category.category_id))
+        return await loader.query.where(
             cls.user_id == user_id
         ).where(
             cls.is_expense == is_expense
         ).where(
             cls.created_at >= datetime.combine(from_date, time(0, 0))
         ).gino.all()
-        return transactions
 
     @classmethod
     async def save_csv(cls, user_id: int):

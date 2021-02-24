@@ -1,12 +1,10 @@
 from datetime import date
 from typing import Any, NamedTuple, List
 
-from utils.messages import finance
-from models.db.category import Category
 from models.db.transaction import Finance
 from models.db.user import User
-
 from utils.converter import format_datetime_to_time
+from utils.messages import finance
 
 
 class BalanceData(NamedTuple):
@@ -18,23 +16,21 @@ class BalanceData(NamedTuple):
 
 
 async def get_balance_by_id_by_date(user_id: int, from_date: date) -> BalanceData:
-    budget = await User.get_budget(user_id=user_id)
+    expenses = 0
+    transactions_data = []
+
+    budget = await User.get_budget(user_id=user_id) if not None else 0
     transactions = await Finance.get_transactions(
         user_id=user_id,
         from_date=from_date,
         is_expense=True
     )
-    if not budget:
-        budget = 0
-    if not transactions:
-        balance = budget,
-        transactions_data = []
-    else:
-        balance = budget - sum([item.value for item in transactions])
-        categories_ids = [item.category_id for item in transactions]
-        categories_names = await Category.get_category_names_by_ids(categories_ids)
-        transactions_data = list(zip(transactions, categories_names))
 
+    if transactions:
+        expenses = sum([item.value for item in transactions])
+        transactions_data = transactions
+
+    balance = budget - expenses
     return BalanceData(
         user_id=user_id,
         budget=budget,
@@ -44,17 +40,19 @@ async def get_balance_by_id_by_date(user_id: int, from_date: date) -> BalanceDat
     )
 
 
-def get_transaction_message(data: BalanceData.transactions_data) -> str:
-    if not data:
+def get_transaction_message(data: BalanceData) -> str:
+    if not data.transactions_data:
         return finance.BALANCE_EMPTY_DATA_MESSAGE
+    if data.budget == data.balance:
+        return finance.BUDGET_EMPTY_DATA_MESSAGE
 
     data_format = '{created_at:10} --   {value:.2f} руб. -- {category:10}'
     data_message = '\n'.join([
         data_format.format(
-            category=item[1],
-            value=item[0].value,
-            created_at=format_datetime_to_time(item[0].created_at)
+            category=item.parent.category_name,
+            value=item.value,
+            created_at=format_datetime_to_time(item.created_at)
         )
-        for item in data
+        for item in data.transactions_data
     ])
     return finance.BALANCE_TRANS_DATA_MESSAGE + data_message
