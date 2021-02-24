@@ -38,7 +38,7 @@ async def get_balance(msg_or_callback: Union[types.Message, types.CallbackQuery]
         msg_or_callback.from_user.id,
         balance_message)
 
-    transaction_message = get_transaction_message(balance_data.transactions_data)
+    transaction_message = get_transaction_message(balance_data)
     await bot.send_message(
         msg_or_callback.from_user.id,
         transaction_message,
