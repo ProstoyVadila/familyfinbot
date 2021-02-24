@@ -50,7 +50,8 @@ BALANCE_STATS_MESSAGE = 'Баланс:\n<b>{balance:.2f} руб.</b>\n\n' \
 
 BALANCE_TRANS_DATA_MESSAGE = 'Транзакции за сегодня:\n\n'
 
-BALANCE_EMPTY_DATA_MESSAGE = 'У вас пока нет транзакций за сегодня, но вы можете сделать это тут <b>/expense</b>'
+BALANCE_EMPTY_DATA_MESSAGE = 'У вас пока нет транзакций за сегодня, но' \
+                             ' вы можете сделать это тут <b>/expense</b>'
 
 GRAPH_STATS_MESSAGE = 'Вот возможные на данный момент ' \
                       'варианты аналитики:\n\n' \
@@ -61,3 +62,8 @@ GRAPH_STATS_MESSAGE = 'Вот возможные на данный момент 
                       '\nВы можете предложить свои на \n<b>/feedback</b>'
 
 YOUR_GRAPH_MESSAGE = 'Ваш график: ...'
+
+
+# Downloader data messages
+DOWNLOADER_EMPTY_DATA_MESSAGE = 'У вас пока не было записей в базе. Но' \
+                                ' вы можете добавить их тут <b>/expense</b>'

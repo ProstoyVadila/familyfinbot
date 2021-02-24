@@ -1,25 +1,31 @@
-import csv
-import os
+from io import BytesIO
 from datetime import date
+from typing import Optional
 
 from aiogram.types import InputFile
 
 from models.db.transaction import Finance
 
 
-async def download_file_csv(user_id: int) -> InputFile:
-    from_date = date(2020, 1, 1)
-    data = await Finance.get_transactions(user_id=user_id, from_date=from_date, is_expense=True)
-    fieldnames = ['created_at', 'value', 'category', 'is_expense']
-    with open(f'utils/temporary_files/{user_id}.csv', 'w') as csvfile:
-        writer_ = csv.writer(csvfile)
-        writer_.writerow(fieldnames)
+DEFAULT_FIELD_NAMES = ['created_at', 'value', 'category', 'is_expense']
+DEFAULT_DATE = date(2020, 1, 1)
+
+
+async def upload_data_to_csv(user_id: int, from_date: date = DEFAULT_DATE, field_names=None) -> Optional[InputFile]:
+    if field_names is None:
+        field_names = DEFAULT_FIELD_NAMES
+
+    columns = ','.join(field_names) + '\r\n'
+    temp_list = []
+
+    if data := await Finance.get_transactions(user_id=user_id, from_date=from_date):
         for item in data:
-            writer_.writerow([item.created_at, item.value, item.parent.category_name, item.is_expense])
+            temp_list.append(','.join([
+                str(item.created_at),
+                str(item.value),
+                item.parent.category_name,
+                str(item.is_expense)
+            ]))
+        output = columns + '\r\n'.join(temp_list)
 
-    return InputFile(f'utils/temporary_files/{user_id}.csv', filename='your_data.csv')
-
-
-async def delete_file(filename: str):
-    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '../../utils/temporary_files/' + filename)
-    os.remove(path)
+        return InputFile(BytesIO(output.encode('utf8')), filename='your_data.csv')
