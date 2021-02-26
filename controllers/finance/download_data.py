@@ -20,7 +20,7 @@ async def upload_data_to_csv(user_id: int, from_date: date = DEFAULT_DATE, field
         return InputFile(BytesIO(output.encode('utf8')), filename='your_data.csv')
 
 
-def construct_csv(data: List[Finance], field_names: str):
+def construct_csv(data: List[Finance], field_names: str) -> str:
     columns = ','.join(field_names) + '\r\n'
     temp_list = []
 
