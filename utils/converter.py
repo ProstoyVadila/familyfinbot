@@ -1,5 +1,21 @@
+import csv
 import datetime
+from io import StringIO
 from calendar import monthrange
+
+
+class ArgsToCsv:
+    def __init__(self, separator=','):
+        self.separator = separator
+        self.buffer = StringIO()
+        self.writer = csv.writer(self.buffer)
+
+    def stringify(self, *args):
+        self.writer.writerow(args)
+        value = self.buffer.getvalue().strip('\r\n')
+        self.buffer.truncate(0)
+        self.buffer.seek(0)
+        return value
 
 
 def get_days_by_month() -> int:

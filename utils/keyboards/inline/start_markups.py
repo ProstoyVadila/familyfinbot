@@ -53,7 +53,7 @@ menu_markup = InlineKeyboardMarkup(
             InlineKeyboardButton(
                 text='Выгрузить свои данные  '
                      + e.emojize(':floppy_disk:'),
-                callback_data='download_data_button'
+                callback_data='download_button'
             )
         ],
     ]

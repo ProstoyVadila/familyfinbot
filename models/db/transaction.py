@@ -33,8 +33,16 @@ class Finance(TimeBaseModel):
         )
 
     @classmethod
-    async def get_transactions(cls, user_id: int, from_date: date, is_expense: bool) -> List['Finance']:
+    async def get_transactions(cls, user_id: int, from_date: date, is_expense: bool = None) -> List['Finance']:
         loader = cls.load(parent=Category.on(cls.category_id == Category.category_id))
+
+        if is_expense is None:
+            return await loader.query.where(
+                cls.user_id == user_id
+            ).where(
+                cls.created_at >= datetime.combine(from_date, time(0, 0))
+            ).gino.all()
+
         return await loader.query.where(
             cls.user_id == user_id
         ).where(
@@ -42,7 +50,3 @@ class Finance(TimeBaseModel):
         ).where(
             cls.created_at >= datetime.combine(from_date, time(0, 0))
         ).gino.all()
-
-    @classmethod
-    async def save_csv(cls, user_id: int):
-        pass
