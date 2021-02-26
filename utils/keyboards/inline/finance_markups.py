@@ -87,3 +87,26 @@ graphs_stats_markup = InlineKeyboardMarkup(
         ]
     ]
 )
+
+download_markup = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text='csv',
+                callback_data='csv_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='xlsx',
+                callback_data='xlsx_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Назад',
+                callback_data='menu_button'
+            )
+        ]
+    ]
+)

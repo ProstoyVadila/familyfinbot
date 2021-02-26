@@ -65,5 +65,10 @@ YOUR_GRAPH_MESSAGE = 'Ваш график: ...'
 
 
 # Downloader data messages
+DOWNLOADER_START_MESSAGE = 'Сейчас я выгружу все ваши данные, ' \
+                           'но для начала выберите формат'
+
+DOWNLOADER_LOADING_MESSAGE = 'Загружаю данные... Это может занять некоторое время'
+
 DOWNLOADER_EMPTY_DATA_MESSAGE = 'У вас пока не было записей в базе. Но' \
                                 ' вы можете добавить их тут <b>/expense</b>'
