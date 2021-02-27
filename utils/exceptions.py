@@ -1,4 +1,3 @@
-from controllers.finance.download_data import FILE_FORMATS
 
 
 class FileFormatError(Exception):
@@ -8,4 +7,4 @@ class FileFormatError(Exception):
         super().__init__(self.message)
 
     def __str__(self):
-        return f'{self.file_format} -> {self.message} It must be one of {FILE_FORMATS}'
+        return f'{self.file_format} -> {self.message}'
