@@ -22,3 +22,6 @@ redis = {
     'address': (IP, 6379),
     'encoding': 'utf8'
 }
+
+DONATE_URL_90 = 'https://capu.st/bill5c849142-1478'
+DONATE_URL = 'https://capu.st/bill70918ae8-cd9e'

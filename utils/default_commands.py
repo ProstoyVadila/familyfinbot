@@ -12,4 +12,5 @@ async def set_default_commands(dp):
         types.BotCommand("feedback", "Оставить фидбек"),
         types.BotCommand("menu", "Меню"),
         types.BotCommand("help", "Помощь"),
+        types.BotCommand('donate', 'На развитие бота')
     ])
