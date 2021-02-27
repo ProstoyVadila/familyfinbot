@@ -42,7 +42,7 @@ async def get_balance(msg_or_callback: Union[types.Message, types.CallbackQuery]
     await bot.send_message(
         msg_or_callback.from_user.id,
         transaction_message,
-        reply_markup=finance_markups.back_stats_markup
+        reply_markup=finance_markups.back_markup
     )
 
 
@@ -64,5 +64,5 @@ async def get_expanse_by_categories_graph(callback: types.CallbackQuery):
     await bot.send_message(
         callback.from_user.id,
         finance.YOUR_GRAPH_MESSAGE + f'\n your graph is {callback.data}',
-        reply_markup=finance_markups.back_stats_markup
+        reply_markup=finance_markups.back_markup
     )
