@@ -1,0 +1,35 @@
+version: "3.1"
+
+services:
+  db:
+    container_name: database
+    image: sameersbn/postgresql
+    environment:
+      PG_PASSWORD: $PG_PASSWORD
+      PG_DATABASE: $PG_DATABASE
+    restart: always
+    ports:
+    - 5432:5432
+    networks:
+      - botnet
+#    volumes:
+#    - ./pgdata:/var/lib/postgesql
+
+  familyfinbot:
+    container_name: familyfinbot
+    build:
+      context: .
+    command: python app.py
+    restart: always
+    networks:
+      - botnet
+    env_file:
+      - ".env"
+    volumes:
+      - .:/src
+    depends_on:
+      - db
+
+networks:
+  botnet:
+    driver: bridge
