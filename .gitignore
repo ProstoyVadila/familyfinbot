@@ -13,3 +13,4 @@ venv/
 *.db
 /data/test.db
 /tests
+db_init.sql
