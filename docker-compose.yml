@@ -1,0 +1,37 @@
+version: "3.1"
+
+services:
+  db:
+    container_name: database
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: $PG_PASSWORD
+      POSTGRES_USER: $PG_USER
+      POSTGRES_DB: $PG_DATABASE
+    restart: always
+    ports:
+    - 5432:5432
+    networks:
+      - botnet
+    volumes:
+      - ./db_init.sql:/docker-entrypoit-initdb.d/db_init.sql  # adding init sql script to create db, user/pass
+      - ./utils/postgres_data:/var/lib/postgesql
+
+  familyfinbot:
+    container_name: familyfinbot
+    build:
+      context: .
+    command: python app.py
+    restart: always
+    networks:
+      - botnet
+    env_file:
+      - ".env"
+    volumes:
+      - .:/src
+    depends_on:
+      - db
+
+networks:
+  botnet:
+    driver: bridge

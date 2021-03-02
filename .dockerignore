@@ -1,0 +1,9 @@
+.idea/
+README.md
+__pycache__/
+tests/
+.git
+venv/
+Pipfile
+Pipfile.lock
+*.pyc
