@@ -14,7 +14,7 @@ services:
     networks:
       - botnet
     volumes:
-      - ./db_init.sql:/docker-entrypoit-initdb.d/db_init.sql
+      - ./db_init.sql:/docker-entrypoit-initdb.d/db_init.sql  # adding init sql script to create db, user/pass
       - ./utils/postgres_data:/var/lib/postgesql
 
   familyfinbot:
