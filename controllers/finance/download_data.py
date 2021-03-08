@@ -27,7 +27,7 @@ async def upload_data_to_xlsx(user_id: int, from_date: date = DEFAULT_DATE, fiel
         field_names = DEFAULT_FIELD_NAMES
 
     if data := await Finance.get_transactions(user_id=user_id, from_date=from_date):
-        df = pd.DataFrame({'Data': [10, 20, 30, 40, 50]})
+        df = create_df(data)
         output = BytesIO()
         with pd.ExcelWriter(output) as writer:
             df.to_excel(writer)
@@ -57,3 +57,16 @@ def construct_csv(data: List[Finance], field_names: str) -> str:
             str(item.is_expense)
         ]))
     return columns + '\r\n'.join(temp_list)
+
+
+def create_df(data_raw: List[Finance]) -> pd.DataFrame:
+    temp_list: List[list] = []
+
+    for item in data_raw:
+        temp_list.append([
+            item.created_at,
+            item.value,
+            item.parent.category_name,
+            item.is_expense
+        ])
+    return pd.DataFrame(temp_list, columns=DEFAULT_FIELD_NAMES)
