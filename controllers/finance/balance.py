@@ -25,18 +25,16 @@ async def get_balance_by_id_by_date(user_id: int, from_date: date) -> BalanceDat
     budget = await User.get_budget(user_id=user_id)
     if not budget:
         budget = 0
-
     transactions = await Finance.get_transactions(
         user_id=user_id,
         from_date=from_date,
         is_expense=True
     )
-
     if transactions:
         expenses = sum([item.value for item in transactions])
         transactions_data = transactions
-
     balance = budget - expenses
+
     return BalanceData(
         user_id=user_id,
         budget=budget,
@@ -50,18 +48,17 @@ def get_transaction_message(data: BalanceData) -> str:
     message = finance.BALANCE_TRANS_DATA_MESSAGE
 
     if data.budget == 0:
-        message = finance.BUDGET_EMPTY_DATA_MESSAGE
+        return finance.BUDGET_EMPTY_DATA_MESSAGE
     if not data.transactions_data:
-        message += "\n\n" + finance.BALANCE_EMPTY_DATA_MESSAGE
-    else:
-        data_message = '\n'.join([
-            DATA_FORMAT.format(
-                category=item.parent.category_name,
-                value=item.value,
-                created_at=format_datetime_to_time(item.created_at)
-            )
-            for item in data.transactions_data
-        ])
-        message += data_message
+        return finance.BALANCE_EMPTY_DATA_MESSAGE
 
-    return message
+    data_message = '\n'.join([
+        DATA_FORMAT.format(
+            category=item.parent.category_name,
+            value=item.value,
+            created_at=format_datetime_to_time(item.created_at)
+        )
+        for item in data.transactions_data
+    ])
+
+    return message + data_message
