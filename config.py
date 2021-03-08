@@ -12,7 +12,9 @@ PG_DATABASE = str(os.getenv('PG_DATABASE'))
 PG_USER = str(os.getenv('PG_USER'))
 PG_PASSWORD = str(os.getenv('PG_PASSWORD'))
 PG_PORT = str(os.getenv('PG_PORT'))
+IP = str(os.getenv('IP'))
 
+POSTGRES_URI_TEST = f'postgresql+asyncpg://{PG_USER}:{PG_PASSWORD}@{IP}/{PG_DATABASE}'
 POSTGRES_URI = f'postgresql+asyncpg://{PG_USER}:{PG_PASSWORD}@{HOST}/{PG_DATABASE}'
 
 aiogram_redis = {
