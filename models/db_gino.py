@@ -42,11 +42,11 @@ class TimeBaseModel(BaseModel):
 
 async def on_startup():
     logging.info('Connecting to PostgreSQL')
-    await db.set_bind(config.POSTGRES_URI)
+    await db.set_bind(config.POSTGRES_URI_TEST)
     # await db.gino.drop_all()
     await db.gino.create_all()
 
 
-async def on_shutdown(dp: Dispatcher):
+async def on_shutdown():
+    await db.pop_bind().close()
     logging.info('Connection to PostgreSQL was closed')
-    await db.close()
