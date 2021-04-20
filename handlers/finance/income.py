@@ -6,7 +6,8 @@ from aiogram.dispatcher import FSMContext
 from app import dp, bot
 from utils.messages import finance, error
 from models.db.transaction import Finance
-from utils.keyboards.finance_keyboard import income_category_keyboard, menu_keyboard
+from utils.keyboards.finance_keyboard import income_category_keyboard
+from utils.keyboards.inline import start_markups
 from models.states.finance_states import IncomeState
 from utils.extractors import parse_value
 from utils.tools import answer_if_callback
@@ -48,7 +49,7 @@ async def get_income_category(message: types.Message, state: FSMContext):
             value=data['value'],
             category=data['category']
         ),
-        reply_markup=menu_keyboard
+        reply_markup=start_markups.back_to_menu_markup
     )
     await Finance.add_transaction(
         user_id=message.from_user.id,

@@ -1,3 +1,4 @@
+from .balance import dp
 from .expense import dp
 from .income import dp
 from .budget import dp

@@ -7,6 +7,9 @@ from utils.converter import format_datetime_to_time
 from utils.messages import finance
 
 
+DATA_FORMAT = '{created_at:10} --   {value:.2f} руб. -- {category:10}'
+
+
 class BalanceData(NamedTuple):
     user_id: int
     budget: float
@@ -19,18 +22,19 @@ async def get_balance_by_id_by_date(user_id: int, from_date: date) -> BalanceDat
     expenses = 0
     transactions_data = []
 
-    budget = await User.get_budget(user_id=user_id) if not None else 0
+    budget = await User.get_budget(user_id=user_id)
+    if not budget:
+        budget = 0
     transactions = await Finance.get_transactions(
         user_id=user_id,
         from_date=from_date,
         is_expense=True
     )
-
     if transactions:
         expenses = sum([item.value for item in transactions])
         transactions_data = transactions
-
     balance = budget - expenses
+
     return BalanceData(
         user_id=user_id,
         budget=budget,
@@ -41,18 +45,20 @@ async def get_balance_by_id_by_date(user_id: int, from_date: date) -> BalanceDat
 
 
 def get_transaction_message(data: BalanceData) -> str:
+    message = finance.BALANCE_TRANS_DATA_MESSAGE
+
+    if data.budget == 0:
+        return finance.BUDGET_EMPTY_DATA_MESSAGE
     if not data.transactions_data:
         return finance.BALANCE_EMPTY_DATA_MESSAGE
-    if data.budget == data.balance:
-        return finance.BUDGET_EMPTY_DATA_MESSAGE
 
-    data_format = '{created_at:10} --   {value:.2f} руб. -- {category:10}'
     data_message = '\n'.join([
-        data_format.format(
+        DATA_FORMAT.format(
             category=item.parent.category_name,
             value=item.value,
             created_at=format_datetime_to_time(item.created_at)
         )
         for item in data.transactions_data
     ])
-    return finance.BALANCE_TRANS_DATA_MESSAGE + data_message
+
+    return message + data_message

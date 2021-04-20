@@ -23,9 +23,9 @@ menu_markup = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text='Установить бюджет  '
-                     + emojize(':money_bag:'),
-                callback_data='budget_button'
+                text='Узнать баланс  '
+                    + emojize(':credit_card:'),
+                callback_data='balance_stats_button'
             )
         ],
         [
@@ -38,6 +38,13 @@ menu_markup = InlineKeyboardMarkup(
                 text='Внести доход  '
                      + emojize(':chart_increasing:'),
                 callback_data='income_button'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Установить бюджет  '
+                     + emojize(':money_bag:'),
+                callback_data='budget_button'
             )
         ],
         [
